@@ -67,7 +67,7 @@ impl KeyauthApi {
             customer_panel_link: String::new(),
             username: String::new(),
             ip: String::new(),
-            hwid: machine_uuid::get(),
+            hwid: machineid_rs::IdBuilder::new(machineid_rs::Encryption::SHA256).add_component(machineid_rs::HWIDComponent::SystemID).build("keyauth").unwrap(),
             create_date: String::new(),
             last_login: String::new(),
             subscription: String::new(),
@@ -153,7 +153,7 @@ impl KeyauthApi {
     pub fn register(&mut self, username: String, password: String, license: String, hwid: Option<String>) -> Result<(), String> {
         let hwidd = match hwid {
             Some(hwid) => hwid,
-            None => machine_uuid::get(),
+            None => machineid_rs::IdBuilder::new(machineid_rs::Encryption::SHA256).add_component(machineid_rs::HWIDComponent::SystemID).build("keyauth").unwrap(),
         };
         let mut req_data = HashMap::new();
         req_data.insert("type", "register");
@@ -252,7 +252,7 @@ impl KeyauthApi {
     pub fn login(&mut self, username: String, password: String, hwid: Option<String>) -> Result<(), String> {
         let hwidd = match hwid {
             Some(hwid) => hwid,
-            None => machine_uuid::get(),
+            None => machineid_rs::IdBuilder::new(machineid_rs::Encryption::SHA256).add_component(machineid_rs::HWIDComponent::SystemID).build("keyauth").unwrap(),
         };
 
         let mut req_data = HashMap::new();
@@ -310,7 +310,7 @@ impl KeyauthApi {
     pub fn license(&mut self, license: String, hwid: Option<String>) -> Result<(), String> {
         let hwidd = match hwid {
             Some(hwid) => hwid,
-            None => machine_uuid::get(),
+            None => machineid_rs::IdBuilder::new(machineid_rs::Encryption::SHA256).add_component(machineid_rs::HWIDComponent::SystemID).build("keyauth").unwrap(),
         };
 
         let mut req_data = HashMap::new();
